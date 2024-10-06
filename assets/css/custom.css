@@ -1,0 +1,329 @@
+
+
+button:focus {
+  outline :0px;
+}
+
+.complement {
+  margin : 0;
+  line-height: normal;
+}
+
+h3 {
+  font-weight: bold;
+  line-height: normal;
+  font-size: 1.5em;
+}
+
+footer .button {
+  font-size: 0.8em;
+  padding: 0.5em 1.5em 0.5em 1.5em;
+  height: auto;
+  color: #f8fcfc !important;
+}
+
+.paper {
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+  font-weight: 500;
+}
+
+.paper::before{
+  align-self:center ;
+}
+
+.article-title {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.list-container h3, #research .container>h3 {
+  margin-bottom: 0.5em;
+  text-align:left;
+}
+
+.list-container ul {
+  display: table-row;
+  list-style: none;
+  text-align: left;
+}
+
+.list-container li {
+  display: block;
+  text-align: left;
+  line-height: normal;
+  margin-bottom: 0.5em;
+}
+
+.list-container li::before {
+  display: inline;
+  text-align: right;
+  content: "+";
+  font-size: 1em;
+  font-weight: bold;
+  color: #e27689;
+  padding-right: 12px;
+}
+
+.list-container {
+  width: 100%;
+  margin-bottom: 2em;
+}
+
+.list-container strong {
+  color: #666;
+  font-weight : 400;
+  display: inline;
+  white-space: break-spaces;
+}
+
+
+/* Style the button that is used to open and close the collapsible content */
+.collapsible {
+  /*background-color: #eee;
+  color: #444;*/
+  cursor: pointer;
+  padding: 0 2.5rem;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 0.8em;
+  border-radius: 0rem;
+}
+
+/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+.activee, .collapsible:hover {
+  /*background-color: #ccc;*/
+}
+
+/* Style the collapsible content. Note: hidden by default */
+.content2 {
+  padding: 0em 0.5em;
+  display: none;
+  overflow: hidden;
+  background-color: #f1f1f1;
+}
+
+.collapsible:after {
+  content: '\2304'; /* Unicode character for "plus" sign (+) */
+  font-size: 30px;
+  color: gray;
+  float: right;
+  margin-left: 5px;
+}
+
+ul.feature-icons2 {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0rem 0;
+  padding-left: 0;
+}
+
+  ul.feature-icons2:first-child {
+    margin-top: 0;
+  }
+
+  ul.feature-icons2 p {
+    margin-bottom:0;
+    padding-left: 1em;
+  }
+
+  ul.feature-icons2 li {
+    position: relative;
+    width: 100%;
+    display:flex;
+  }
+
+    ul.feature-icons2 li:before {
+      background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 512 512'%3E%3Cpath d='M256,0l221.7,128v256L256,512L34.3,384V128L256,0z' fill='rgba(144, 144, 144, 0.1)' /%3E%3C/svg%3E");
+      background-position: center;
+      background-repeat: no-repeat;
+      background-size: contain;
+      color: #000000;
+      display: block;
+      font-size: 1.25rem;
+      height: 3.25rem;
+      left: 0;
+      line-height: 3.25rem;
+      text-align: center;
+      width: 5rem;
+    }
+
+    ul.feature-icons2 li:nth-child(1) {
+      margin-top: 0;
+    }
+
+.activee:after {
+  content: "\2303"; /* Unicode character for "minus" sign (-) */
+}
+
+
+
+input[type="submit"],
+input[type="reset"],
+input[type="button"],
+button,
+.button {
+-moz-appearance: none;
+-webkit-appearance: none;
+-ms-appearance: none;
+appearance: none;
+-moz-transition: background-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, color 0.25s ease-in-out;
+-webkit-transition: background-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, color 0.25s ease-in-out;
+-ms-transition: background-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, color 0.25s ease-in-out;
+transition: background-color 0.25s ease-in-out, box-shadow 0.25s ease-in-out, color 0.25s ease-in-out;
+background-color: transparent;
+border-radius: 0.325rem;
+border: 0;
+box-shadow: inset 0 0 0 2px rgba(144, 144, 144, 0.25);
+cursor: pointer;
+display: inline-block;
+font-size: 0.8rem;
+font-weight: 600;
+height: 4rem;
+line-height: 3rem;
+padding: 0 2rem;
+text-align: center;
+text-decoration: none;
+white-space: nowrap;
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+input[type="button"]:hover,
+button:hover,
+.button:hover {
+	box-shadow: inset 0 0 0 2px #e27689;
+	color: #e27689 !important;
+}
+
+input[type="submit"]:active,
+input[type="reset"]:active,
+input[type="button"]:active,
+button:active,
+.button:active {
+	background-color: rgba(65, 72, 76, 0.25);
+	box-shadow: inset 0 0 0 2px #e27689;
+	color: #e27689 !important;
+}
+
+input[type="submit"].small,
+input[type="reset"].small,
+input[type="button"].small,
+button.small,
+.button.small {
+	font-size: 0.5rem;
+	height: 2.25rem;
+	line-height: 2.25rem;
+	padding: 0 1.25rem;
+}
+
+input[type="submit"].large,
+input[type="reset"].large,
+input[type="button"].large,
+button.large,
+.button.large {
+	font-size: 0.7rem;
+	height: 3.2625rem;
+	line-height: 3.2625rem;
+	padding: 0 3.25rem;
+}
+
+input[type="submit"].wide,
+input[type="reset"].wide,
+input[type="button"].wide,
+button.wide,
+.button.wide {
+	min-width: 13rem;
+}
+
+input[type="submit"].icon:before,
+input[type="reset"].icon:before,
+input[type="button"].icon:before,
+button.icon:before,
+.button.icon:before {
+	margin-right: 0.5rem;
+}
+
+input[type="submit"].fit,
+input[type="reset"].fit,
+input[type="button"].fit,
+button.fit,
+.button.fit {
+	width: 100%;
+}
+
+input[type="submit"].disabled, input[type="submit"]:disabled,
+input[type="reset"].disabled,
+input[type="reset"]:disabled,
+input[type="button"].disabled,
+input[type="button"]:disabled,
+button.disabled,
+button:disabled,
+.button.disabled,
+.button:disabled {
+	pointer-events: none;
+	opacity: 0.25;
+}
+
+input[type="submit"].primary,
+input[type="reset"].primary,
+input[type="button"].primary,
+button.primary,
+.button.primary {
+	background-color: #41484c;
+	box-shadow: none;
+	color: #000000 !important;
+}
+
+	input[type="submit"].primary:hover,
+	input[type="reset"].primary:hover,
+	input[type="button"].primary:hover,
+	button.primary:hover,
+	.button.primary:hover {
+		background-color: #41484c;
+	}
+
+	input[type="submit"].primary:active,
+	input[type="reset"].primary:active,
+	input[type="button"].primary:active,
+	button.primary:active,
+	.button.primary:active {
+		background-color: #41484c;
+	}
+
+@media screen and (max-width: 736px) {
+
+	input[type="submit"],
+	input[type="reset"],
+	input[type="button"],
+	button,
+	.button {
+		font-size: 0.7rem;
+		height: 3.3rem;
+		line-height: 3.3rem;
+	}
+
+		input[type="submit"].large,
+		input[type="reset"].large,
+		input[type="button"].large,
+		button.large,
+		.button.large {
+			font-size: 0.8rem;
+			height: 3.75rem;
+			line-height: 3.75rem;
+		}
+
+		input[type="submit"].small,
+		input[type="reset"].small,
+		input[type="button"].small,
+		button.small,
+		.button.small {
+			font-size: 0.6rem;
+			height: 3rem;
+			line-height: 3rem;
+		}
+
+}
