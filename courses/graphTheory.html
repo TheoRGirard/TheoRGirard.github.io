@@ -32,6 +32,7 @@
 								<li><a href="#chap2" id="chap2-link">Théorèmes</a></li>
                 <li><a href="#chap3" id="chap3-link">Parcours DFS/BFS</a></li>
                 <li><a href="#chap4" id="chap4-link">Programmation dynamique et Bellman-Ford</a></li>
+								<li><a href="#chap8" id="chap8-link">Problèmes</a></li>
 							</ul>
 						</nav>
 
@@ -65,6 +66,7 @@
               <a href="#chap2" class="button scrolly">Théorèmes</a>
               <a href="#chap3" class="button scrolly">Parcours DFS/BFS</a>
               <a href="#chap4" class="button scrolly">Programmation dynamique et Bellman-Ford</a>
+							<a href="#chap8" class="button scrolly">Problèmes</a>
             </footer>
 
           </div>
@@ -251,7 +253,45 @@ def explore(Graphe, pointDepart, pointArrivee):
 						</div>
 					</section>
 
+					<section id="chap8" class="four">
+						<div class="container course">
+							<h2> Problèmes</h2>
 
+							<h3>Problème 0: Chou, mouton et loup</h3>
+
+
+							<h3>Problème 1: Le solitaire</h3>
+							<br/>
+							<div class="center">
+							<img src="figures/solitaire.jpg" alt="Un plateau de solitaire rempli." style="max-width:80%;" />
+						</div>
+							<p>Le jeu du solitaire est un jeu qui, comme son nom l'indique, se joue seul. La configuration de départ est un plateau rempli de billes à l'exception du trou central (cf photo ci-dessus).
+								Le but du jeu est d'arriver à la configuration finale inverse : une seule bille sur le plateau, au centre. Le seul coup légal dans ce jeu est de faire sauter une bille par dessus une autre bille. Dans ce cas, la bille qui a sauté est déplacée de deux cases. La bille qui s'est fait sauter par-dessus, elle, est retirée du plateau (voir la figure ci-dessous).
+							</p>
+							<div class="row justify-content-center" style="padding-left:1.5em;">
+								<div class="col-6 col-sm-3">
+									<div class="center"><img src="figures/CoupSolitaire1.png" alt="" style="max-width:80%; max-height: 12em;" /></div>
+									<p>La bille de gauche saute par dessus la bille du centre.</p>
+								</div>
+								<div class="col-6 col-sm-3">
+									<div class="center"><img src="figures/CoupSolitaire2.png" alt="" style="max-width:80%; max-height: 12em;" /></div>
+									<p>La bille de gauche se retrouve à droite, la bille du centre est retirée du plateau.</p>
+								</div>
+							</div>
+							<p>Ce coup ne peut être réalisé que verticalement ou horizontalement, il n'est pas possible de l'effectuer en diagonale. La case d'arrivée de la bille qui saute doit être libre pour réaliser ce coup.</p>
+							<h4>Exercice : </h4>
+							<div class="list-container">
+								<ul>
+									<li><strong>1. </strong> Formaliser ce problème comme un graphe. Gagner le jeu doit se résumer à trouver un chemin sur un graphe.</li>
+									<li><strong>2. </strong> Trouver une solution au solitaire en utilisant un algorithme de parcours de graphe.</li>
+									<li><strong>3. </strong> Généraliser le problème : est-il possible d'atteindre n'importe quelle situation finale ? En partant de n'importe quelle situation finale ?</li>
+									<li><strong>4. </strong> Trouver une situation initiale permettant d'arriver à la configuration suivante :
+										<div class="center"><img src="figures/ConfigExo2.png" alt="" style="max-width:30%;padding-top:0.5em;"/></div>
+										Au maximum, combien de billes possède une telle configuration initiale ?</li>
+								</ul>
+							</div>
+						</div>
+					</section>
 			</div>
 
 		<!-- Footer -->
