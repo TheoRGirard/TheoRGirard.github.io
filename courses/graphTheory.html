@@ -31,7 +31,7 @@
 								<li><a href="#chap1" id="chap1-link">Introduction</a></li>
 								<li><a href="#chap2" id="chap2-link">Théorèmes</a></li>
                 <li><a href="#chap3" id="chap3-link">Parcours DFS/BFS</a></li>
-                <li><a href="#chap4" id="chap4-link">Programmation dynamique et Bellman-Ford</a></li>
+                <li><a href="#chap4" id="chap4-link">Programmation dynamique</a></li>
 								<li><a href="#chap8" id="chap8-link">Problèmes</a></li>
 							</ul>
 						</nav>
@@ -65,7 +65,7 @@
               <a href="#chap1" class="button scrolly">Introduction</a>
               <a href="#chap2" class="button scrolly">Théorèmes</a>
               <a href="#chap3" class="button scrolly">Parcours DFS/BFS</a>
-              <a href="#chap4" class="button scrolly">Programmation dynamique et Bellman-Ford</a>
+              <a href="#chap4" class="button scrolly">Programmation dynamique</a>
 							<a href="#chap8" class="button scrolly">Problèmes</a>
             </footer>
 
@@ -253,6 +253,53 @@ def explore(Graphe, pointDepart, pointArrivee):
 						</div>
 					</section>
 
+					<section id="chap4" class="three">
+						<div class="container course">
+							<h2> Programmation dynamique et Bellman-Ford</h2>
+
+							<br/>
+
+							<p>Le principe de la programmation dynamique est un principe algorithmique pour optimiser la quantité de calculs à effectuer lors de la résolution de problèmes d'optimisation.
+								L'idée générale est de diviser le problème d'optimisation en une multitude de sous-problèmes plus faciles à résoudre et de stocker les résulats de ces sous-problèmes plutôt que de résoudre ces problèmes à chaque itératon.
+								L'exemple le plus fréquent d'application du principe de la programmation dynamique est l'algorithme de Bellman-Ford. </p>
+
+								<h3>Algorithme de Bellman-Ford</h3>
+
+								<p>On se donne le graphe pondéré suivant :
+									<div class="center"><img src="figures/BellmanFord.png" alt="" /></div>
+									Le poids sur chaque arrête correspond au temps nécessaire pour traverser cette arrête. On se demande quel est le plus court chemin pour relier A à B. <br/>
+
+									L'algorithme de Bellman-Ford permet de trouver efficacement un tel chemin. Il fonctionne de la manière suivante : en partant de A, on évalue le coût nécessaire pour aller à chaque voisin de A.
+									Ici, pour B, on trouve 1 et pour C, 2. On réitère le processus pour les voisins de B puis les voisins de C en selectionnant la valeur de coût minimale trouvée. On continue cet algorithme jusqu'à ce qu'on couvre tout le graphe.
+									 <div class="center"><img src="figures/BellmanFord.gif" alt="" style="padding-top:0.5em;"/></div>
+								 </p>
+
+								 <p>En python, on pourrait implémenter l'algorithme de Bellman-Ford ainsi:
+									 <pre><code class="langage-python">
+Parcourus = []
+ValeurDict = {}
+def evaluerCout(Graphe, pointactuel):
+		Parcourus.append(pointactuel)
+		valeurMinimale = float("inf")
+		for voisin in Graphe.voisins(pointactuel):
+				if voisin in Parcourus:
+						if ValeurDict[voisin] + Graphe.poidsArrete(pointactuel, voisin) <= valeurMinimale:
+								valeurMinimale = ValeurDict[voisin] + Graphe.poidsArrete(pointactuel, voisin)
+		ValeurDict[pointactuel] = valeurMinimale
+		for voisin in Graphe.voisins(pointactuel):
+				if voisin not in Parcourus:
+						evaluerCout(Graphe, voisin)
+
+Parcourus.append(pointDepart)
+ValeurDict[pointDepart] = 0
+for voisin in Graphe.voisins(pointDepart):
+		evaluerCout(Graphe, voisin)
+									 	</code></pre>
+
+
+						</div>
+					</section>
+
 					<section id="chap8" class="four">
 						<div class="container course">
 							<h2> Problèmes</h2>
@@ -290,6 +337,31 @@ def explore(Graphe, pointDepart, pointArrivee):
 										Au maximum, combien de billes possède une telle configuration initiale ?</li>
 								</ul>
 							</div>
+
+							<h3>Problème 2: Itinéraire RATP </h3>
+
+							<br/>
+
+							<p>On souhaite coder un outil de recherche d'itinéraire en région parisienne en utilisant exclusivement les transports en commun et la marche.
+								On utilise la base de données SQL téléchargeable <a href="ressources/RATPnetwork.db">ICI </a>. La base de données est un extrait des données ouvertes et publiques trouvables sur <a href="https://www.data.gouv.fr/fr/datasets/positions-geographiques-des-stations-du-reseau-ferre-ratp-idf/">data.gouv.fr</a>.
+							</p>
+
+							<div class="center">
+								<img src="figures/ReseauRATP.png" alt="" style="max-width:80%;" />
+							</div>
+
+							<h4>Exercice : </h4>
+							<div class="list-container">
+								<ul>
+									<li><strong>1. </strong> Afficher le graphe du réseau RATP avec networkx. On utilisera sqlite3 pour récupérer les données dans la base de donnée.</li>
+									<li><strong>2. </strong> Formaliser le problème sous la forme d'un graphe pondéré. Attention : on peut passer d'une station à l'autre en marchant.</li>
+									<li><strong>3. </strong> En utilisant un algorithme type Bellman-Ford, trouver le chemin le plus court en transport en commun entre deux stations. On supposera que changer de ligne de transport prend 5 minutes et que, sur une même ligne, passer d'une station à l'autre prend 2 minutes.</li>
+									<li><strong>4. </strong> Même question mais cette fois, on cherche le trajet le plus court entre deux points de l'espace (pas forcément des stations). On considère que la vitesse de marche est de 4km/h.</li>
+									<li><strong>5. </strong> Créer une interface utilisateur pour permettre à un utilisateur ne connaissant pas python d'utiliser les fonctions précédentes.</li>
+								</ul>
+							</div>
+
+
 						</div>
 					</section>
 			</div>
