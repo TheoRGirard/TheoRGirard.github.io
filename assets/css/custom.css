@@ -119,6 +119,44 @@ footer .button {
   margin-top:1em;
 }
 
+.theoreme{
+  font-size: 1em;
+  width:100%;
+  margin:50px auto;
+  color: #555555;
+  padding:1.2em 30px 0.5em 75px;
+  border-left:8px solid #94C5CC ;
+  line-height:1.6;
+  position: relative;
+  background:#dce3e2;
+}
+
+.theoreme p, ul {
+  margin-bottom: 0em;
+}
+
+.theoreme::before{
+  content: "Théorème";
+  color:#94C5CC;
+  font-size:1.5em;
+  font-weight:bold;
+  position: absolute;
+  left: 15px;
+  top: 0px;
+}
+
+.theoreme::after{
+  content: '';
+}
+
+.theoreme h4{
+  display:block;
+  color:#333333;
+  font-style: normal;
+  font-weight: normal;
+  margin-top:1em;
+}
+
 .course {
   text-align: left;
 }

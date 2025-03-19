@@ -32,6 +32,8 @@
 								<li><a href="#chap2" id="chap2-link">Théorèmes</a></li>
                 <li><a href="#chap3" id="chap3-link">Parcours DFS/BFS</a></li>
                 <li><a href="#chap4" id="chap4-link">Programmation dynamique</a></li>
+								<li><a href="#chap5" id="chap5-link">Max flow / Min cut</a></li>
+								<li><a href="#chap6" id="chap6-link">Tri topologique</a></li>
 								<li><a href="#chap8" id="chap8-link">Problèmes</a></li>
 							</ul>
 						</nav>
@@ -66,6 +68,8 @@
               <a href="#chap2" class="button scrolly">Théorèmes</a>
               <a href="#chap3" class="button scrolly">Parcours DFS/BFS</a>
               <a href="#chap4" class="button scrolly">Programmation dynamique</a>
+							<a href="#chap5" class="button scrolly">Max flow / Min cut</a>
+							<a href="#chap6" class="button scrolly">Tri topologique</a>
 							<a href="#chap8" class="button scrolly">Problèmes</a>
             </footer>
 
@@ -100,7 +104,7 @@
               </div>
 
               <div class="definition">
-              <h4>Graphe Orienté et Graphe Non Orienté</h4>
+              <h4>Graphe orienté et graphe non orienté</h4>
               <ul>
                   <li><strong>Graphe orienté</strong> : Un graphe dans lequel les arêtes sont dirigées, c'est-à-dire que chaque arête est représentée par un couple ordonné de sommets (u, v), où u est le sommet de départ et v le sommet d'arrivée.</li>
                   <li><strong>Graphe non orienté</strong> : Un graphe dans lequel les arêtes ne sont pas dirigées, c'est-à-dire que chaque arête est simplement un ensemble de deux sommets {u, v}, sans ordre particulier.</li>
@@ -109,18 +113,45 @@
 
               <div class="center">
                   <p>Exemple de graphe orienté</p>
-                  <img src="figures/basicOrientedGraph.png" alt="Exemple de graphe orienté" style="width: 40%;">
+                  <img src="figures/basicOrientedGraph.png" alt="Exemple de graphe orienté" style="width: 60%;">
                   <p>V = { 1,2,3,4,5 }<br> E = {(1,2), (1,3), (2,3), (3,2), (5,2), (2,4)}</p>
               </div>
 
+							<div class="definition">
+              <h4>Graphe pondéré</h4>
+              Un graphe pondéré est un graphe (orienté ou non) auquel on ajoute une fonction \(\omega : E \longrightarrow \mathbb{R}\). On appelle \(\omega\) la fonction de poids.
+              </div>
+							<p>Le poids d'une arrête peut être interprêté comme le temps nécessaire pour parcourir l'arrête ou, plus généralement, comme un coût à payer pour traverser l'arrête.</p>
+							<div class="center">
+                  <p>Exemple de graphe pondéré non orienté</p>
+                  <img src="figures/BellmanFord.png" alt="Exemple de graphe pondéré" style="width: 60%;">
+                  <p>V = { A,B,C,D,E,F,G,H }<br/> E = {(A,B), (A,C), (C,E), (B,D), (D,E), (D,F), (F,H), (H,G), (E,G)}
+									<br/> \( \omega((A,B)) = 1, \; \omega((B,D)) = 3, \; \omega((E,G)) = 2,\) ...
+								</p>
+              </div>
+
+
               <div class="definition">
-              <h4>Degré d'un Sommet</h4>
-              <p>Le <strong>degré</strong> d'un sommet v, noté deg(v), est le nombre d'arêtes qui touchent v.</p>
-              <p>Dans un graphe orienté, on distingue le <strong>degré entrant</strong> et le <strong>degré sortant</strong>.</p>
+              <h4>Voisins et degré d'un sommet</h4>
+							<p>Soit \(A \in V\). Dans le cas d'un graphe non orienté, on définit : </p>
+								<ul>
+								<li>l'ensemble des voisins \(\mathcal{V}(A)\) est l'ensemble des sommets \(B \in V\) tels que \( (A,B) \in E \),</li>
+              <li>le <strong>degré</strong> d'un sommet \(A\), noté \( \mathbf{deg}(A) \), est le nombre d'arêtes qui touchent \(A\). C'est à dire le cardinal de \(\mathcal{V}(A)\).</li>
+						</ul>
+              <p>Dans le cas d'un graphe orienté, on parle plutôt de : <p>
+								<ul>
+								<li>l'ensemble des <strong>prédécesseurs</strong> d'un sommet \(A\) notés \(\mathcal{P}(A)\) défini par :
+								\[ \mathcal{P}(A) := \{ B \in V \textrm{ tels que } (B,A) \in E \}, \]</li>
+								<li>l'ensemble des <strong>successeurs</strong> de \(A\) noté \(\mathcal{S}(A)\) défini par :
+								\[ \mathcal{S}(A) := \{ B \in V \textrm{ tels que } (A,B) \in E \}. \]</li>
+							</ul>
+								Alors on définit le <strong>degré entrant</strong> de \(A\) noté \(d^-(A)\) par \( d^-(A) = \mathbf{Card}(\mathcal{P}(A))\).
+								De même, le <strong>degré sortant</strong> de \(A\) noté \(d^+(A)\) est défini par \( d^+(A) = \mathbf{Card}(\mathcal{S}(A))\)
+							</p>
               </div>
 
               <div class="definition">
-              <h4>Chemin et Cycle</h4>
+              <h4>Chemin et cycles</h4>
               <p>Un <strong>chemin</strong> est une séquence de sommets dans laquelle chaque sommet est adjacent au suivant. Un <strong>cycle</strong> est un chemin dont le premier et le dernier sommet sont identiques.</p>
               </div>
 
@@ -159,7 +190,7 @@ plt.show()</code></pre>
               <p>On obtient le résultat suivant :</p>
 
               <div class="center">
-                  <img src="figures/basicgraph2.png" alt="Résultat du graphe" style="width: 40%;">
+                  <img src="figures/basicgraph2.png" alt="Résultat du graphe" style="width: 60%;">
               </div>
 
 						</div>
@@ -197,7 +228,7 @@ plt.show()</code></pre>
 
                 <div class="center">
                   En vert, le sommet actuel. En jaune, le sommet qu'on recherche. En rouge les sommets déjà parcourus.
-                    <img src="figures/DFS1.gif" alt="Parcours DFS de graphe qui aboutit." style="margin-right:0.5em;"><img src="figures/DFS2.gif" alt="Parcours DFS de graphe qui n'aboutit pas.">
+                    <img src="figures/DFS1.gif" alt="Parcours DFS de graphe qui aboutit." style="margin-right:0.5em;max-width: 60%;"><img src="figures/DFS2.gif" alt="Parcours DFS de graphe qui n'aboutit pas." style="max-width: 60%;">
                 </div>
 
               <p>D'un point de vue code, on utilise la plupart du temps un algorithme récursif (bien qu'un algo itératif soit envisageable).
@@ -228,7 +259,7 @@ def explorer(Graphe, sommetActuel, pointArrivee, parcourus):
 
                 <div class="center">
                   En vert, le sommet actuel. En jaune, le sommet qu'on recherche. En rouge les sommets déjà parcourus.
-                    <img src="figures/BFS2.gif" alt="Parcours BFS de graphe qui aboutit.">
+                    <img src="figures/BFS2.gif" alt="Parcours BFS de graphe qui aboutit."style="max-width: 70%;">
                 </div>
 
                 <p>Le parcours BFS est généralement implémenté comme un algorithme itératif à la différence du DFS. En voici une implémentation possible en python, en supposant l'existence d'un objet Graphe avec une méthode Voisins qui renvoie la liste des voisins d'un sommet.</p>
@@ -266,12 +297,12 @@ def explore(Graphe, pointDepart, pointArrivee):
 								<h3>Algorithme de Bellman-Ford</h3>
 
 								<p>On se donne le graphe pondéré suivant :
-									<div class="center"><img src="figures/BellmanFord.png" alt="" /></div>
+									<div class="center"><img src="figures/BellmanFord.png" alt="" style="max-width: 70%;"/></div>
 									Le poids sur chaque arrête correspond au temps nécessaire pour traverser cette arrête. On se demande quel est le plus court chemin pour relier A à B. <br/>
 
 									L'algorithme de Bellman-Ford permet de trouver efficacement un tel chemin. Il fonctionne de la manière suivante : en partant de A, on évalue le coût nécessaire pour aller à chaque voisin de A.
 									Ici, pour B, on trouve 1 et pour C, 2. On réitère le processus pour les voisins de B puis les voisins de C en selectionnant la valeur de coût minimale trouvée. On continue cet algorithme jusqu'à ce qu'on couvre tout le graphe.
-									 <div class="center"><img src="figures/BellmanFord.gif" alt="" style="padding-top:0.5em;"/></div>
+									 <div class="center"><img src="figures/BellmanFord.gif" alt="" style="padding-top:0.5em;max-width: 70%;"/></div>
 								 </p>
 
 								 <p>En python, on pourrait implémenter l'algorithme de Bellman-Ford ainsi:
@@ -296,6 +327,108 @@ for voisin in Graphe.voisins(pointDepart):
 		evaluerCout(Graphe, voisin)
 									 	</code></pre>
 
+
+						</div>
+					</section>
+
+					<section id="chap5" class="two">
+						<div class="container course">
+							<h2> Flot maximal et coupe minimale</h2>
+
+							<br/>
+							<h3>Problème de flot maximal</h3>
+							Avant d'énoncer le problème du flot maximal, on introduit deux définition supplémentaires.
+							<div class="definition">
+              <h4>Réseau de flot</h4>
+              <p>Un réseau de flot est un graphe pondéré orienté \( G = (V,E,c) \) qui vérifie :</p>
+								<ul>
+	                  <li>les poids des arrêtes sont strictement positifs (i.e. \( c > 0 \) ),</li>
+										<li>si \((A,B) \in E \) alors \((B,A) \notin E \).</li>
+								</ul>
+									 La fonction poids \(\omega\) est appelée "capacité".
+              </div>
+
+							<div class="definition">
+              <h4>Flot associé à un graphe \(G\)</h4>
+              <p>Soit \( G = (V,E,c) \) un réseau de flot. Soient \( s, t \in V \) deux sommets particuliers que l'on nomme respectivement la source et le puits. On suppose que \(s\) n'a pas de prédécesseur et que \(t\) n'a pas de successeur dans \(G\).
+								On dit que la fonction \( f : E \longrightarrow \mathbb{R} \) est un <strong>flot de \(s\) à \(t\)</strong> si :
+							</p>
+							<ul>
+                  <li>pour toute arrête \((A,B) \in E,\; 0 \leq f((A,B)) \leq c((A,B))\),</li>
+                  <li>pour tout sommet \(A \in V,\) si \(A \neq s \) et si \(A \neq t\), alors \[ \sum\limits_{B \in \mathcal{P}(A)} f((B,A)) = \sum\limits_{B \in \mathcal{S}(A)} f((A,B))\] où \( \mathcal{P}(A), \mathcal{S}(A) \) sont respectivement l'ensemble des prédécesseurs de \(A\) et l'ensemble des successeurs de \(A\).</li>
+              </ul>
+							<p>
+							La valeur \(|f|\) d'un flot \(f\) est définie par :
+							\[|f| = \sum\limits_{B \in \mathcal{V}(s)} f((s,B)) = \sum\limits_{A \in \mathcal{V}(t)} f((A,t)).\]
+						</p>
+              </div>
+
+							<p>Si on se donne un réseau de flot \(V,E,\omega\), un sommet source \(s\) et un sommet puits \(t\),
+								le problème du flot maximal est donc de trouver un flot \(f\) de \(s\) à \(t\) de valeur \(|f|\) maximale.
+							</p>
+
+							<h3>Algorithme de Ford-Fulkerson</h3>
+							<p>
+							L'algorithme de Ford-Fulkerson permet de trouver un flot maximal lorsque l'algorithme termine (attention il existe des cas où l'algorithme ne termine jamais).
+							Le principe de l'algorithme repose sur l'utilisation d'un graphe résiduel d'un flot \(G_f \). Si on cherche le flot maximal sur \(G = (V,E,c)\),
+							le graphe résiduel \(G_f\) d'un flot \(f\) est un graphe pondéré orienté \(G_f = (V, E_{r_f}, r_f )\) (\(G_f\) a donc les mêmes sommets que \(G\)) où \(r_f\) est défini par :
+							\[ \forall (A,B) \in V^2, \;\; r_f((A,B)) := \left\{ \begin{matrix} c((A,B)) - f((A,B)) & \textrm{ si } (A,B) \in E \\
+							f((B,A)) & \textrm{ si } (B,A) \in E\\
+							0 & \textrm{sinon} \end{matrix} \right. \]
+							et \(E_{r_f} = \{ (A,B) \in V^2, \textrm{ tels que } r_f(A,B) > 0 \} \).</p>
+							<p>On utilise alors l'algorithme suivant :</p>
+							<div class="row" style="justify-content:center;"><div style="width:auto;text-align: left;"><ul>
+								<li>on initialise le flot \(f\) comme nul;</li>
+								<li>tant qu'il existe un chemin \(\gamma\) de \(s\) à \(t\) dans \(G_f\) :
+									<ul>
+										<li>on sélectionne \(m\) le min de \(r_f((A,B))\) pour \((A,B) \in \gamma\);</li>
+										<li>pour toute arrête \( (A,B) \in \gamma,\) :
+											<ul>
+												<li>si \((A,B) \in E,\;\; f((A,B)) += m \);</li>
+												<li>si \((A,B) \notin E,\;\; f((A,B)) -= m \);</li>
+											</ul>
+										</li>
+									</ul>
+							</ul></div>
+						</div>
+						<br/>
+							<p>Lorsque l'algorithme se termine, le flot \( f \) est alors le flot maximal.
+
+
+							<h3>Problème de la coupe minimale</h3>
+							<p>Encore une fois, avant de pouvoir présenter le problème, il faut introduire de nouvelles définitions.</p>
+							<div class="definition">
+              <h4>Coupe d'un graphe</h4>
+              <p>Une <strong>coupe</strong> coupe \(C = (S,T) \) d'un graphe \(G = (V,E) \) est la donnée de deux sous-ensemble de sommets \(S\) et \(T\) tels que : </p>
+								<ul>
+	                  <li>les ensembles \(S\) et \(T\) couvrent \(V\) i.e. \(V = S \cup T \),</li>
+										<li>les ensembles \(S\) et \(T\) soient disjoints i.e. \(S \cap T = \emptyset\).</li>
+								</ul>
+								<p>Le <strong>cut-set</strong> \(Z_C\) d'une coupe \(C = (S,T) \) est l'ensemble des arrêtes coupées par la coupe i.e.
+								\[Z_C := \{ (A,B) \in E, \textrm{ t. q. } A \in S \textrm{ et } B \in T \}. \]</p>
+								<p>Si \(G = (V,E,\omega) \) est un graphe pondéré, le <strong>poids</strong> \(\omega_C\) d'une coupe \(C\) est la somme des poids des arrêtes de \(Z_C\) i.e.
+								\[\omega_C := \sum\limits_{(A,B) \in Z_C} \omega((A,B)). \]</p>
+              </div>
+
+							<p>Le problème de la coupe minimale consiste donc à trouver la (ou une des) coupe(s) de poids minimale(s) pour un graphe pondéré donné.
+							Lorsque le graphe est un réseau de flot et qu'on impose les conditions \(s \in S\) et \(t \in T\), le théorème du max flow/min cut montre que
+							le problème de flot maximal et le problème de coupe minimale sont directement reliés.</p>
+							<div class="theoreme">
+              <h4>Max flow/min cut</h4>
+              <p>Soit \( G = (V,E,c) \) un réseau de flot avec \(s,t \in V\).
+								La valeur \(|f|\) du flot maximal de \(s\) à \(t\) est égal au poids \(\omega_C\) de la coupe minimal \(C = (S,T) \) telle que \(s \in S\) et \(t \in T \).</li>
+							</p>
+              </div>
+							En sélectionnant dans le flot maximal un ensemble d'arrête dont le flot est égal à la capacité de l'arrête, on peut construire une coupe minimale.
+
+						</div>
+					</section>
+
+					<section id="chap6" class="three">
+						<div class="container course">
+							<h2> Tri topologique</h2>
+
+							<br/>
 
 						</div>
 					</section>
@@ -360,6 +493,40 @@ for voisin in Graphe.voisins(pointDepart):
 									<li><strong>5. </strong> Créer une interface utilisateur pour permettre à un utilisateur ne connaissant pas python d'utiliser les fonctions précédentes.</li>
 								</ul>
 							</div>
+
+							<h3>Problème 3 : répartition minière</h3>
+
+							<br/>
+							<div class="center">
+							<img src="figures/minerai-de-fer.jpg" alt="Un plateau de solitaire rempli." style="max-width:80%;" />
+						</div>
+							<p>Une entreprise veut exploiter une carrière de fer.
+								L'entreprise souhaite savoir combien de minerai de fer elle peut extraire en fonction de ce que les entreprises locales sont prêtes à lui acheter.
+								En faisant un sondage, on obtient les informations suivantes (exprimées en tonnes par mois notés \(t/m\) ) :</p>
+								<ul>
+									<li>L'entreprise \(A\) peut transformer \(300 t/m\) de minerai de fer en acier brut.</li>
+									<li>L'entreprise \(B\) peut transformer \(120 t/m\) de minerai de fer en acier raffiné.</li>
+									<li>L'entreprise \(C\) peut transformer \(230 t/m\) de minerai de fer en acier brut.</li>
+									<li>L'entreprise \(D\) peut transformer \(80t/m\) d'acier raffiné en pièces automobiles.</li>
+									<li>L'entreprise \(E\) peut transformer \(260 t/m\) d'acier brut en quincaillerie.</li>
+									<li>L'entreprise \(G\) peut transformer \(300 t/m\) de quincaillerie en pièces automobiles.</li>
+									<li>L'entreprise \(H\) peut transformer \(170 t/m\) d'acier raffiné en quincaillerie.</li>
+									<li>L'entreprise \(I\) peut transformer \(110 t/m\) d'acier raffiné et \(130t/m \) d'acier brut en plaques d'acier.</li>
+									<li>L'entreprise \(J\) peut transformer \(260 t/m\) de plaques d'acier en pièces automobiles.</li>
+									<li>L'entreprise \(K\) peut transformer \(180 t/m\) d'acier brut en acier raffiné.</li>
+									<li>L'entreprise \(L\) rachète toute pièce automobile de la région, elle a le monopole complet.</li>
+								</ul>
+								<p>L'entreprise souhaiterait savoir combien de tonnes de minerai de fer elle pourrait espérer vendre par mois étant donné l'écosystème régional.</p>
+
+								<h4>Exercice : </h4>
+								<div class="list-container">
+									<ul>
+										<li><strong>1. </strong> Reformuler le problème comme un problème de flot maximal (Attention : il faut bien choisir ce que sont les sommets du graphe).</li>
+										<li><strong>2. </strong> À l'aide d'un algorithme de Ford-Fulkerson (ou d'un autre algorithme de max flow externe comme scipy), répondre à la question de l'entreprise.</li>
+										<li><strong>3. </strong> Si l'entreprise \(I\) ferme quel serait l'impact sur la demande de minerai ? Même question pour l'entreprise \(H\).</li>
+										<li><strong>4. </strong> Trouver une coupe minimale du graphe obtenu. Que représente les deux sous-ensembles de sommets obtenus ?</li>
+									</ul>
+								</div>
 
 
 						</div>
