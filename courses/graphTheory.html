@@ -430,6 +430,72 @@ for voisin in Graphe.voisins(pointDepart):
 
 							<br/>
 
+							Un tri topologique d'un graphe est défini uniquement sur un graphe acyclique orienté.
+							<div class="definition">
+								<h4>Tri topologique d'un graphe acyclique orienté</h4>
+								<p>On dit que \(G = (V,E) \) est un <strong>graphe acyclique orienté</strong> si c'est un graphe orienté ne comportant aucun cycle.</p>
+								<p>On dit que \((v_n)_{1\leq n \leq \mathbf{Card}(V)}\) est un <strong>tri topologique</strong> de \(V\) si:</p>
+									<ul>
+										<il> Pour tout \(n\), \(v_n \in V \)</il>
+										<il> Si \(i \neq j \) alors \( v_i \neq v_j \)</il>
+										<il> Si \(i < j \) alors il n'existe aucun chemin de \(v_j\) à \(v_i\)</il>
+									</ul>
+							</div>
+							<p>Un tri topologique n'est généralement pas unique. Par exemple, si on considère le graphe orienté acyclique suivant.</p>
+							<div class="center"><img src="figures/acyclicDirectedGraph.png" alt="" style="max-width: 70%;"/></div>
+							<p>Alors, les numérotations :
+							\[ [ A, B, C, D, E, F, G ],\]
+							\[ [ A, C, D, B, F, E, G ],\]
+							\[ [ A, C, B, E, F, D, G ],\]
+							sont trois tris topologiques de \(G\).</p>
+
+							<h3>Algorithmique</h3>
+
+							<p>Pour trouver un tri topologique d'un graphe on utilise un algorithme de parcours DFS légèrement modifié.
+							L'idée est d'associer à chaque sommet un temps \(t\). Au début, tous les sommets sont à temps \(0\).
+							On initialise aussi un temps global à \(0\).
+							À chaque fois qu'un sommet est complètement exploré, on augmente le temps global de \(1\) et le sommet complètement exploré (i.e. qui n'a plus aucun voisin non parcouru)
+							se voit affecté le temps correspondant au temps global actuel.
+							On lance alors des explorations du graphe en profondeur à partir des sommets dont le temps est encore à \(0\) jusqu'à ce que tous les sommets aient un temps strictement positif.
+							</p>
+							<div class="center"><img src="figures/TriTopo.gif" alt="Un exemple d'application de l'algorithme DFS modifié." style="max-width: 70%;"/></div>
+							<p>Il ne reste plus qu'à trier les sommets dans l'ordre décroissant de leur temps et on obtient un tri topologique. Pour l'exemple ci-dessus, on obtient le tri :
+								\[ [ A, C, D, B, F, E, G ].\]
+							</p>
+
+							<p>En python, on pourrait implémenter l'algorithme de recherche d'un tri topologique comme suit :
+								<pre><code class="langage-python">
+parcourus = []
+times = dict()
+
+#On initialise tous les temps des sommets à 0
+for v in vertices:
+		times[v] = 0
+
+#Et le temps global à 1
+GlobalTime = 1
+
+def explorerProfondeurModifie(sommetActuel):
+		parcourus.append(sommetActuel)
+		for voisin in Voisins(sommetActuel):
+				if(voisin not in parcourus):
+						explorerProfondeurModifie(voisin)
+						GlobalTime += 1
+
+		times[sommetActuel] = GlobalTime
+
+existeSommetNul = True
+while existeSommetNul:
+		SommetNul = -1
+		for sommet in vertices:
+				if(times[sommet] == 0):
+						SommetNul = sommet
+						break
+		if SommetNul == -1:
+				existeSommetNul = False
+		else:
+				explorerProfondeurModifie(SommetNul)
+								 </code></pre>
 						</div>
 					</section>
 
@@ -498,7 +564,7 @@ for voisin in Graphe.voisins(pointDepart):
 
 							<br/>
 							<div class="center">
-							<img src="figures/minerai-de-fer.jpg" alt="Un plateau de solitaire rempli." style="max-width:80%;" />
+							<img src="figures/minerai-de-fer.jpg" alt="Une carrière de fer." style="max-width:80%;" />
 						</div>
 							<p>Une entreprise veut exploiter une carrière de fer.
 								L'entreprise souhaite savoir combien de minerai de fer elle peut extraire en fonction de ce que les entreprises locales sont prêtes à lui acheter.
@@ -525,6 +591,50 @@ for voisin in Graphe.voisins(pointDepart):
 										<li><strong>2. </strong> À l'aide d'un algorithme de Ford-Fulkerson (ou d'un autre algorithme de max flow externe comme scipy), répondre à la question de l'entreprise.</li>
 										<li><strong>3. </strong> Si l'entreprise \(I\) ferme quel serait l'impact sur la demande de minerai ? Même question pour l'entreprise \(H\).</li>
 										<li><strong>4. </strong> Trouver une coupe minimale du graphe obtenu. Que représente les deux sous-ensembles de sommets obtenus ?</li>
+									</ul>
+								</div>
+
+								<h3>Problème 4 : Patisseries</h3>
+
+								<br/>
+
+								<div class="center"><img src="figures/tarteAufraise.jpg" alt="Une tarte à la framboise." style="max-width:80%;" /></div>
+
+
+
+								<p>Un patissier cherche à optimiser son temps pour la confection des deux recettes suivantes :</p>
+								<div class = "row">
+									<div class= "col-6">
+										<h4 class="center">Tarte aux fraises</h4>
+										<ol>
+											<li>Couper les fraises (10 min)</li>
+											<li>Préparer la crême patissière (30 min)</li>
+											<li>Préparer la pâte à tarte (5 min)</li>
+											<li>Cuire la pâte (45 min)</li>
+											<li>Attendre que la pâte refroidisse (30 min)</li>
+											<li>Dresser la tarte avec la crême et les fraises (10 min)</li>
+										</ol>
+									</div>
+									<div class= "col-6">
+										<h4 class="center">Choux à la crême</h4>
+										<ol>
+											<li>Préparer la crême patissière (30 min)</li>
+											<li>Préparer la pâte à choux (15 min)</li>
+											<li>Laisser reposer la pâte (60 min)</li>
+											<li>Cuire les choux (25 min)</li>
+											<li>Remplir les choux avec la crême (20 min)</li>
+										</ol>
+									</div>
+								</div>
+
+								<h4>Exercice : </h4>
+								<div class="list-container">
+									<ul>
+										<li><strong>1. </strong> Dessiner un graphe modélisant le problème.</li>
+										<li><strong>2. </strong> On suppose d'abord que le patissier dispose de suffisamment de commis (et de fours) pour réaliser toutes les étapes simultanément à condition que les prérequis de l'étape soient satisfaits.
+													Utiliser un tri topologique pour proposer un planning. Est-ce que le planning obtenu est optimal ?</li>
+										<li><strong>3. </strong> On suppose maintenant que le patissier ne dispose que d'un seul four, il ne peut donc pas y avoir deux cuissons en simultané. Proposer un planning correspondant à cette nouvelle contrainte.</li>
+										<li><strong>4. </strong> Même question mais en supposant que le patissier n'a qu'un seul commis. Dans cette situation, seul deux étapes "actives" peuvent être effectuées en simultané.</li>
 									</ul>
 								</div>
 
