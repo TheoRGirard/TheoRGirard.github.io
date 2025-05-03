@@ -1,0 +1,257 @@
+<!DOCTYPE HTML>
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Theo Girard</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<link href="assets/css/custom.css" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="images/favMath.png">
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<div id="header">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<a href="/" id="about-link"><span class="icon solid fa-arrow-left backButton">Retour</span></a>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="#chap1" id="chap1-link">Demonstrations</a></li>
+								<li><a href="#chap2" id="chap2-link">Obstacles' impact</a></li>
+                <li><a href="#chap3" id="chap3-link">Mushroom profile</a></li>
+                <li><a href="#chap4" id="chap4-link">Regularization</a></li>
+							</ul>
+						</nav>
+
+				</div>
+
+				<div class="bottom">
+
+					<!-- Social Icons -->
+						<ul class="icons">
+							<li><a href="https://github.com/TheoRGirard" class="icon brands fa-github"><span class="label">Github</span></a></li>
+							<li><a href="/#contact" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+						</ul>
+
+				</div>
+
+			</div>
+
+		<!-- Main -->
+			<div id="main">
+
+        <section id="top" class="one dark cover" style="background-image: url('assets/images/Hughes2Dillu.png');">
+          <div class="container">
+
+            <header>
+              <h2 class="alt">Simulations of Hughes' model</h2>
+            </header>
+
+            <footer>
+              <a href="#chap1" class="button scrolly">Demonstrations</a>
+              <a href="#chap2" class="button scrolly">Obstacles' impact</a>
+              <a href="#chap3" class="button scrolly">Mushroom profile</a>
+              <a href="#chap4" class="button scrolly">Regularization</a>
+            </footer>
+
+          </div>
+        </section>
+
+				<!-- Portfolio -->
+					<section id="chap0" class="two">
+						<div class="container course">
+              <header>
+                <h2>Introduction and notations</h2>
+              </header>
+
+							<p style="text-align:left;">In the two-dimensional setting, the Hughes' model takes the following form:
+								\[\left\{ \begin{matrix} \partial_t \rho(t,x) + \textrm{div} \left( \vec{V}(x) f(\rho(t,x)) \right) = 0 \\
+								\left|\nabla u(x) \right| = c(\rho(t,x)) \\
+								\vec{V}(x) = - \frac{\nabla u(x)}{|\nabla u (x)|}. \end{matrix}\right.\]
+								Here \( u \) is a solution of the Eikonal equation with a Dirichlet condition \(u=0\) at the exits.
+							</br>
+
+						</div>
+					</section>
+
+					<section id="chap1" class="three">
+						<div class="container course">
+              <header>
+                <h2>Demonstrations</h2>
+              </header>
+
+							<h4>University restaurant of Tours</h4>
+							<p>
+							Below is a simulation of the 2D Hughes model in a domain defined by the geometry of the university restaurant of Tours and with a random initial datum defined by
+								\[ \forall \mathcal{T} \in M_\Delta, \;\; \rho_0(\mathcal{T}) = 0.23 -0.4(X-0.5), \; \; X \sim \mathcal U ([0,1]).\]
+							</p>
+
+							<div class="center">
+								<iframe style="width: 80%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/pUaT-9KkeuM?si=mx5PDqlPGICI3_Aw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+							</div>
+
+							<br/>
+							<h4>Two exits symetrical room</h4>
+							<p>
+							Below is a simulation of the 2D Hughes model in the setting defined by:
+
+							    \[ \bar\Omega := [-2,0]\times [3,4] \cup [0,10]\times [0,7] \cup [10,12] \times [3,4], \]
+							    \[ \mathcal{E} := \{-2\} \times [3,4] \cup \{12\} \times [3,4],\]
+							    \[ \mathcal{W} := \partial \Omega \setminus \mathcal{E},\]
+							    \[\rho_0(x) := 0.7\times \mathbb{1}_{B((7,2.5),2.4)},\]
+							    \[ c(\rho) = 1 +5\rho. \]
+							</p>
+							<div class="center">
+								<iframe style="width: 80%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/pUaT-9KkeuM?si=mx5PDqlPGICI3_Aw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+							</div>
+						</div>
+					</section>
+
+					<section id="chap2" class="two">
+						<div class="container course">
+              <header>
+                <h2>Obstacle's impact</h2>
+              </header>
+							<p>
+							In order to explore the impact of an obstacle in front of an exit, we introduce the following domain:
+							  \[ \bar\Omega_0 := [0,5] \times[0,5] \cup [5,7] \times [2,3], \]
+							  \[ \mathcal{E} := \{7\} \times [2,3], \]
+							  \[ \rho_0 = \mathbb{1}_{[0,2]\times[1.5,3.5]},\]
+							  \[ c(\rho) := 1 = \rho. \]
+							Furthermore, for any \( X_c \in [3,4] \) we define:
+							\[ \Omega_{X_c} := \Omega_0 \setminus B((X_c,2.5),0.7). \]
+							We obtain a class of domains with an round obstacle with a variable position. We present below a simulation with \( X_c = 3.5 \).
+						</p>
+
+						<div class="center">
+							<iframe style="width: 80%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/pUaT-9KkeuM?si=mx5PDqlPGICI3_Aw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+						</div>
+
+						<p>Here is a graph of the total evacuation time in relation with the position of the obstacle:</p>
+						<div class="center"><img src="simulations/figures/hughes2d/EvacTimes.png" alt="" style="max-width:80%;" /></div>
+						<p>It appears that the <strong>Hughes</strong> approximation is not able to reproduce the so-called Braess paradox.
+						</div>
+					</section>
+
+					<section id="chap3" class="three">
+						<div class="container course">
+              <header>
+                <h2>Mushroom profile</h2>
+              </header>
+							<p>In Hughes' simulations, we observe that, when the total mass drops below a certain threshold
+								(around \( \mathbf{TM} = 14 \) ), the <strong>Hughes</strong> approximation essentially does not depend on the initial datum anymore.
+								We call this threshold the <strong>mushroom</strong> threshold and, if \( \mathbf{TM}_\Delta(\rho^j_\Delta) \) is less
+								than the <strong>mushroom</strong> threshold, we say that the <strong>Hughes</strong> approximation is in its <strong>mushroom</strong>
+								state in reference to the distinctive shape. We present here three simulations exhibiting this <strong>mushroom</strong> property in the domain
+								defined by:
+								\[ \Omega := [0,10] \times [0,7] \cup [10,12] \times [3,4], \]
+								\[ \mathcal E := \{12\} \times [3,4]. \]
+ 							</p>
+							<div class="row">
+								<div class="col-4 col-12-mobile">
+									<article class="item">
+										<iframe style="width: 100%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/Uu98IHDF_1s?si=dxlM9_F0IPodR0tp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+										<header style="padding:1em;">
+											<h3>Round initial datum</h3>
+										</header>
+									</article>
+								</div>
+								<div class="col-4 col-12-mobile">
+									<article class="item">
+										<iframe style="width: 100%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/B7D9uMjtV8k?si=HwwSN1ruci3EmpQs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+										<header style="padding:1em;">
+											<h3>Bar initial datum</h3>
+										</header>
+									</article>
+								</div>
+								<div class="col-4 col-12-mobile">
+									<article class="item">
+										<iframe style="width: 100%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/pUaT-9KkeuM?si=mx5PDqlPGICI3_Aw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+										<header style="padding:1em;">
+											<h3>Random initial datum</h3>
+										</header>
+									</article>
+								</div>
+							</div>
+
+						</div>
+					</section>
+
+					<section id="chap4" class="four">
+						<div class="container course">
+              <header>
+                <h2>Regularization</h2>
+              </header>
+
+							<p> Here, we try to exhibit a regularization of \( \rho_\Delta \) in time.
+								We are specifically interested in the regularization in the direction that is orthogonal to \( V(x) \).
+								We focus on the specific framework:
+							\[ \Omega := [0,10] \times [0,5],\]
+							\[ \mathcal{E} := \{10\} \times [0,5], \]
+							with
+							\[ c(\rho) = 1 + \rho. \]
+							We consider the initial datum defined by:
+							\[
+							\rho_0 (x,y) := \left\{ \begin{matrix} 0.95 &\textrm{ if } \left\{\begin{matrix} x \in [0,9] \\
+							                                                                      \exists k \in \mathbb{N} \textrm{ s.t. } x \in [0.2+0.8k, 0.8 +0.8k] \\
+							                                                                      \exists j \in \mathbb{N} \textrm{ s.t. } y \in [0.2 +0.6j, 0.6+0.6j] \end{matrix}\right.\\
+							0 &\textrm{ else.}
+							\end{matrix} \right.
+							\]
+							We present the corresponding simulation below:
+							</p>
+
+							<div class="center">
+								<iframe style="width: 80%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/pUaT-9KkeuM?si=mx5PDqlPGICI3_Aw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+							</div>
+
+						</div>
+					</section>
+
+
+			</div>
+
+		<!-- Footer -->
+			<div id="footer">
+
+				<!-- Copyright -->
+					<ul class="copyright">
+						<li>&copy; Theo Girard. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="assets/js/custom.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+      <!-- Gestion des boites de code -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script>
+
+			<script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  			</script>
+
+	</body>
+</html>
