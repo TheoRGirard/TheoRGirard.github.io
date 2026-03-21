@@ -76,12 +76,85 @@
                 <h2>Introduction and notations</h2>
               </header>
 
+							<h3>One-dimensional Hughes model</h3>
+
+							<p style="text-align:left;">In the one-dimensional setting, the Hughes' model simulate the evacuation of a corridor ( here we choose the corridor to be the domain \( [-1,1] \) ) with exits on the right and the left. It can be rewritten as:
+								\[\left\{ \begin{matrix} \partial_t \rho(t,x) + \partial_x \left[ \textrm{sign} (x - \xi(t)) f(\rho(t,x)) \right] = 0 \\
+								\int_{-1}^{\xi(t)} c(\rho(t,x)) \textrm{d} x = \int_{\xi(t)}^1 c(\rho(t,x)) \textrm{d} x. \end{matrix} \right.\]
+								Here \( f(\rho) = \rho v(\rho) \) is the flux function corresponding to Lighthill-Whitham-Richards (LWR) model and \(v\) corresponds to the speed of pedestrians.
+								Also, \( c(\rho) \) is the running cost paid by agents to travel in a location with density \( \rho \).
+								The unknown \( \xi \) named the "turning curve" corresponds to the point in space where pedestrian pay the same total cost to leave the corridor through the left or the right exit.
+
+								</br>
+								Below, two simulations of this model using a finite volume scheme. The turning curve \(\xi\) is in red and the density is plotted on \([-1.5,1.5]\) even if the dynamics of the turning curve only depends on what's inside \([-1,1]\).
+							</p>
+
+
+							<div class="row">
+								<div class="col">
+									<article class="item">
+										<video controls>
+										  <source src="assets/videos/Hughes1DSC1.mp4" type="video/mp4" />
+										  <p>
+										    If you can't see the video, you can download it
+										    <a href="assets/videos/Hughes1DSC1.mp4">here</a>.
+										  </p>
+										</video>
+										<header>
+											<h3>With a cost function \(c(\rho) = 1 + 2\rho\).</h3>
+										</header>
+									</article>
+								</div>
+								<div class="col">
+									<article class="item">
+										<video controls>
+										  <source src="assets/videos/Hughes1DCout2_1.mp4" type="video/mp4" />
+										  <p>
+										    If you can't see the video, you can download it
+										    <a href="assets/videos/Hughes1DCout2_1.mp4">here</a>.
+										  </p>
+										</video>
+										<header>
+											<h3>With constrained evacuation at the exit \(x=1\) </br>
+												and a cost function \(c(\rho) = 1 +4\rho^2\).</h3>
+										</header>
+									</article>
+								</div>
+							</div>
+							</br>
+
+							<h3>2D Hughes' model</h3>
+
 							<p style="text-align:left;">In the two-dimensional setting, the Hughes' model takes the following form:
 								\[\left\{ \begin{matrix} \partial_t \rho(t,x) + \textrm{div} \left( \vec{V}(x) f(\rho(t,x)) \right) = 0 \\
 								\left|\nabla u(x) \right| = c(\rho(t,x)) \\
 								\vec{V}(x) = - \frac{\nabla u(x)}{|\nabla u (x)|}. \end{matrix}\right.\]
 								Here \( u \) is a solution of the Eikonal equation with a Dirichlet condition \(u=0\) at the exits.
 							</br>
+							<p>
+							Below is a simulation of the 2D Hughes model in a domain defined by the geometry of the university restaurant of Tours and with a random initial datum defined by
+								\[ \forall \mathcal{T} \in M_\Delta, \;\; \rho_0(\mathcal{T}) = 0.23 -0.4(X-0.5), \; \; X \sim \mathcal U ([0,1]).\]
+							</p>
+
+							<div class="center">
+								<video controls style="max-width: 100%;">
+									<source src="assets/videos/HughesRuGrandmont.mp4" type="video/mp4" />
+									<p>
+										If you can't see the video, you can download it
+										<a href="assets/videos/HughesRuGrandmont.mp4">here</a>.
+									</p>
+								</video>
+							</div>
+
+							<br/>
+
+							<p>
+							These simulations were computed with the <a href="https://github.com/TheoRGirard/hughes2d">Hughes2d</a> open source software.
+							</p>
+
+							<div class="center"><a href="https://github.com/TheoRGirard/hughes2d" class="button scrolly" style="font-size: 1.5rem;padding-top: 0.3em;margin-bottom: 0.5em;color: #666 !important;">Hughes2d repository</a></div>
+							<div class="center"><a href="https://hughes2d.readthedocs.io/en/latest/index.html" class="button scrolly" style="font-size: 1.5rem;padding-top: 0.3em;margin-bottom: 0.5em;color: #666 !important;">Hughes2d documentation</a></div>
+							<p>More simulations are available below !</p>
 
 						</div>
 					</section>
@@ -92,17 +165,6 @@
                 <h2>Demonstrations</h2>
               </header>
 
-							<h4>University restaurant of Tours</h4>
-							<p>
-							Below is a simulation of the 2D Hughes model in a domain defined by the geometry of the university restaurant of Tours and with a random initial datum defined by
-								\[ \forall \mathcal{T} \in M_\Delta, \;\; \rho_0(\mathcal{T}) = 0.23 -0.4(X-0.5), \; \; X \sim \mathcal U ([0,1]).\]
-							</p>
-
-							<div class="center">
-								<iframe style="width: 80%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/pUaT-9KkeuM?si=mx5PDqlPGICI3_Aw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-							</div>
-
-							<br/>
 							<h4>Two exits symetrical room</h4>
 							<p>
 							Below is a simulation of the 2D Hughes model in the setting defined by:
@@ -114,7 +176,13 @@
 							    \[ c(\rho) = 1 +5\rho. \]
 							</p>
 							<div class="center">
-								<iframe style="width: 80%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/4Uo67Ac6Y0E?si=kA8JVys5gAEdvOlW" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+								<video controls style="max-width: 100%;">
+									<source src="assets/videos/Test5demo.mp4" type="video/mp4" />
+									<p>
+										If you can't see the video, you can download it
+										<a href="assets/videos/Test5demo.mp4">here</a>.
+									</p>
+								</video>
 							</div>
 						</div>
 					</section>
@@ -136,7 +204,13 @@
 						</p>
 
 						<div class="center">
-							<iframe style="width: 80%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/PuDfGkFIguQ?si=1O5RBwG4VtsVIYRp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+							<video controls style="max-width: 100%;">
+								<source src="assets/videos/HughesX3.5.mp4" type="video/mp4" />
+								<p>
+									If you can't see the video, you can download it
+									<a href="assets/videos/HughesX3.5.mp4">here</a>.
+								</p>
+							</video>
 						</div>
 
 						<p>Here is a graph of the total evacuation time in relation with the position of the obstacle:</p>
@@ -162,7 +236,13 @@
 							<div class="row">
 								<div class="col-4 col-12-mobile">
 									<article class="item">
-										<iframe style="width: 100%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/Uu98IHDF_1s?si=dxlM9_F0IPodR0tp" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+										<video controls style="max-width: 100%;">
+											<source src="assets/videos/TestTPID1.mp4" type="video/mp4" />
+											<p>
+												If you can't see the video, you can download it
+												<a href="assets/videos/TestTPID1.mp4">here</a>.
+											</p>
+										</video>
 										<header style="padding:1em;">
 											<h3>Round initial datum</h3>
 										</header>
@@ -170,7 +250,13 @@
 								</div>
 								<div class="col-4 col-12-mobile">
 									<article class="item">
-										<iframe style="width: 100%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/B7D9uMjtV8k?si=HwwSN1ruci3EmpQs" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+										<video controls style="max-width: 100%;">
+											<source src="assets/videos/TestTPID2.mp4" type="video/mp4" />
+											<p>
+												If you can't see the video, you can download it
+												<a href="assets/videos/TestTPID2.mp4">here</a>.
+											</p>
+										</video>
 										<header style="padding:1em;">
 											<h3>Bar initial datum</h3>
 										</header>
@@ -178,7 +264,13 @@
 								</div>
 								<div class="col-4 col-12-mobile">
 									<article class="item">
-										<iframe style="width: 100%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/rGbl2I_Ij5I?si=0CJZRJ70SBevUwJo" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+										<video controls style="max-width: 100%;">
+											<source src="assets/videos/TestTPID0.mp4" type="video/mp4" />
+											<p>
+												If you can't see the video, you can download it
+												<a href="assets/videos/TestTPID0.mp4">here</a>.
+											</p>
+										</video>
 										<header style="padding:1em;">
 											<h3>Random initial datum</h3>
 										</header>
@@ -214,7 +306,13 @@
 							</p>
 
 							<div class="center">
-								<iframe style="width: 80%;aspect-ratio: 4 / 3;"  src="https://www.youtube.com/embed/tidmGflw4Sg?si=CvU-fI1b088J6hVI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+								<video controls style="max-width: 100%;">
+									<source src="assets/videos/TestRegu_1.mp4" type="video/mp4" />
+									<p>
+										If you can't see the video, you can download it
+										<a href="assets/videos/TestRegu_1.mp4">here</a>.
+									</p>
+								</video>
 							</div>
 
 						</div>

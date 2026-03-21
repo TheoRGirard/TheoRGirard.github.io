@@ -1,0 +1,468 @@
+<!DOCTYPE HTML>
+<!--
+	Prologue by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Theo Girard</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="../assets/css/main.css" />
+		<link href="../assets/css/custom.css" rel="stylesheet">
+		<link rel="icon" type="image/x-icon" href="../images/favMath.png">
+	</head>
+	<body class="is-preload">
+
+		<!-- Header -->
+			<div id="header">
+
+				<div class="top">
+
+					<!-- Logo -->
+						<div id="logo">
+							<a href="/" id="about-link"><span class="icon solid fa-arrow-left backButton">Retour</span></a>
+						</div>
+
+					<!-- Nav -->
+						<nav id="nav">
+							<ul>
+								<li><a href="#chap1" id="chap1-link">Naive modelisation</a></li>
+								<li><a href="#chap2" id="chap2-link">Numerical scheme</a></li>
+                <li><a href="#chap3" id="chap3-link">Arduino code</a></li>
+                <li><a href="#chap4" id="chap4-link">References</a></li>
+							</ul>
+						</nav>
+
+				</div>
+
+				<div class="bottom">
+
+					<!-- Social Icons -->
+						<ul class="icons">
+							<li><a href="https://github.com/TheoRGirard" class="icon brands fa-github"><span class="label">Github</span></a></li>
+							<li><a href="/#contact" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
+						</ul>
+
+				</div>
+
+			</div>
+
+		<!-- Main -->
+			<div id="main">
+
+        <section id="top" class="one dark cover" style="background-image: url('lava_flows/banner.png');">
+          <div class="container">
+
+            <header>
+              <h2 class="alt">Lava flows</h2>
+            </header>
+
+            <footer>
+              <a href="#chap1" class="button scrolly">Naive modelisation</a>
+              <a href="#chap2" class="button scrolly">Numerical scheme</a>
+              <a href="#chap3" class="button scrolly">Arduino code</a>
+              <a href="#chap4" class="button scrolly">References</a>
+            </footer>
+
+          </div>
+        </section>
+
+				<!-- Portfolio -->
+					<section id="chap0" class="two">
+						<div class="container course">
+              <header>
+                <h2>Introduction and presentation</h2>
+              </header>
+
+							<p>The main idea of this project is to represent a flow of lava descending a constant slope on a programmable LED strip.
+							This comes from an idea for the scenography of a music festival (Les ilots éléctroniques).
+							In this project, you will find:</p>
+							<div class="list-container">
+							  <ul>
+							    <li>
+							      <strong>a bit of maths</strong> for the modelisation of lava flows with an equation.
+							    </li>
+							    <li>
+							      <strong>a bit of basic physics</strong> in order to represent the radiation of lava.
+							    </li>
+							    <li>
+							      <strong>a few electronic concepts</strong> for the lighting of LEDs.
+							    </li>
+									<li>
+							      <strong>open-source codes</strong> that are available <a href="https://github.com/TheoRGirard/lava_flows_project">here</a>.
+							    </li>
+							  </ul>
+							</div>
+							<p>Some concepts are not completely explained... I apologize for that. However, I think there is some kind of beauty in the technicity of this page.
+							I also need to mention that the mathematical models described here are not scientifically relevant. The idea here is to produce a basic model for a light show.
+							The model must be sufficiently simple so that the code can run on an arduino.
+							If you're interested in accurate modeling of lava flows using partial differential equations, I found a few papers about it online (see <a href="#citations">[BMDP23]</a>), most of them deal with the shallow water equations which
+							is sort of a more complicated version of the scalar conservation law presented here.
+							</p>
+
+						</div>
+					</section>
+
+					<section id="chap1" class="three">
+						<div class="container course">
+              <header>
+                <h2>Naive modelisation</h2>
+              </header>
+
+							<h3>A lava flow as a heat conservation law</h3>
+
+							<p>We want to model the flow of lava on a constant slope as drawn below.
+								<div class="center">
+								<img src="lava_flows/lava_illu1.jpg" alt="A drawing of a flow of lava in one dimension." style="max-width:80%;" />
+							</div>
+							Instead of focusing on the lava itself, we will study the evolution of the heat denoted \( u(t,x) \) at time \(t\) and location \(x\). Then, we assume that the heat is "conserved".
+							More precisely, we assume that the quantity of heat on a segment of space \( [a,b] \) at time \(t_2\) is equal to the quantity of heat present in the segment at time \(t_1\)
+							+ what entered through \(a\) during the period \( [t_1,t_2] \) - what left the segment through \(b\) during the period \( [t_1,t_2] \). Mathematically, this is written as:
+							\[ \int_a^b u(t_2,x) \textrm{d} x = \int_a^b u(t_1,x) \textrm{d} x + \int_{t_1}^{t_2} f(s,a) \textrm{d} s - \int_{t_1}^{t_2} f(s,b) \textrm{d} s. \]
+							Here \(f(t,x)\) represents the flux of heat at time \(t\) and location \(x\).
+							</p>
+
+							<div class="remarque">
+								The assumption of conservation of the heat is a HUGE approximation ! In general, heat is lost and dissipated through the contact with the air and the ground.
+								However, we stress once again that, in this project, the point is not to derive an accurate model.
+							</div>
+
+							<p>Then, we can regroup the terms in the integrals using the fondamental theorem of analysis (and assuming that \(u\) is differentiable). We get:
+								\[ \int_a^b \int_{t_1}^{t_2} \partial_t u(s,x) + \partial_x f(s,x) \textrm{d} t \textrm{d} x = 0. \]
+								Using a Dubois-Reymond like argument (see the <a href="https://en.wikipedia.org/wiki/Fundamental_lemma_of_the_calculus_of_variations">fundamental lemma of the calculus of variations</a>),
+								we get the following equation:
+								\[ \partial_t u(t,x) + \partial_x f(t,x) = 0. \]
+								This will be our prototype model in the following.
+							</p>
+
+							<h3>Burgers equation as a heat flux</h3>
+							<p>Now, we need to determine the heat flux \(f\). Here, we rely on the fact that lava is more fluid when it is hotter.
+								<div class="center">
+								<img src="lava_flows/viscosity-temperature-lava.png" alt="A viscosity-temperature graph for different types of lavas." style="max-width:80%;" />
+								<p>A viscosity-temperature graph extracted from <a href="#citations">[JWL19]</a> that is drawned after the experimental data of <a href="#citations">[WD90,GD03,V08]</a>.</p>
+								</div>
+								We will assume \( f \) is equal to the heat \( u \) multiplied by the speed of the flow \( v \).
+								We will further approximate the problem by assuming that the speed of the flow \( v \) is in fact proportional to the heat itself.
+								The idea behind is that when \( u \) is high, the lava is fluid, hence the flow is fast. More precisely, we set:
+								\[ f(t,x) = u(t,x) \times \frac{u(t,x)}{2} = \frac{(u(t,x))^2}{2}. \]
+								And the partial differential equation we obtain is the so-called Burgers equation:
+								\[ \partial_t u(t,x) + \partial_x \left[ \frac{(u(t,x))^2}{2} \right] = 0. \]
+							</p>
+
+							<div class="remarque">
+								Here we made a lot of brutal approximation. At this point, the model should not be able to represent the reality quantitatively.
+								Nevertheless, since we kept a few fondamental relations, we hope to observe some distinctive phenomena.
+							</div>
+
+							<strong>Distinctive feature:</strong><br/>
+							<p>
+							One crucial feature of the Burgers equation above is that, for positive values of \(u\), the heat travels towards the right with a speed proportional to the heat itself.
+							This causes an "overtaking" phenomenon: hot waves go faster than cooler waves.
+							</p>
+							<div class="center">
+								<img src="lava_flows/lava_illu2.jpg" alt="A drawing of two waves of different heats." style="max-width:80%;" />
+							</div>
+							<br/>
+							<br/>
+
+							<h3>Representation of the heat on a color scale</h3>
+
+							<p>Now that we know how to model the heat corresponding to a flow of lava, the only question that remains is how to represent the heat on a LED strip.
+								From the <a href="https://en.wikipedia.org/wiki/Black-body_radiation"> black-body radiation</a> we know that the color emitted by the lava only depends on the heat, determined by Planck's law.
+								Below is a correspondance between the color and the temperature of a metal used by blacksmiths.</p>
+								<div class="center">
+									<img src="lava_flows/spectrum.png" alt="A correspondance between the color and the temperature of a metal used by blacksmiths." style="max-width:80%;" />
+								</div>
+							<p>In order to emulate Planck's law, we rely on the colorscale 'hot' defined in the <a href="https://matplotlib.org/stable/users/explain/colors/colormaps.html">matplotlib</a> library.</p>
+
+						</div>
+					</section>
+
+					<section id="chap2" class="two">
+						<div class="container course">
+							<header>
+                <h2>Numerical experiments</h2>
+              </header>
+
+							<h3>Numerical scheme for the Burgers equation</h3>
+
+							<p>The standard numerical scheme for such equations is called finite volume scheme.
+								It exactly corresponds to a discretized version of the integral analysis we did above.
+								More precisely, we denote \(u^n_i\) a discretized version of \(u \) where \(i\) is the index of the space discretization with step of size \( \Delta x \)
+								 and \(n\) is the index of the time discretization with step of size \(\Delta t\).
+								 <div class="center">
+	 								<img src="lava_flows/lava_illu3.jpg" alt="A drawing of the discretization in space." style="max-width:80%;" />
+	 							</div>
+								Then, from the way we derive Burgers equation, we get:
+								\[ \frac{u^{n+1}_i - u^n_i}{\Delta t} - \frac{f^{n}_{i-1/2} - f^n_{i+1/2}}{\Delta x} = 0. \]
+								Here \( f^{n}_{i-1/2} \) corresponds to the heat flux going from the cell \(i-1\) to the cell \( i \) at time \(n\Delta t \).
+								Usually, this flux, that depends on both \(u^n_{i-1}\) and \(u^n_i\), must be treated with care (for the monotonicities in particular).
+								Here, however, since we deal with positive temperature, we can be particularly efficient by taking:
+								\[ f^{n}_{i-1/2} = \frac{( u^n_{i-1})^2}{2}.\]
+								Then the complete scheme is:
+								\[ u^{n+1}_i = u^n_i + \frac{\Delta t}{2\Delta x} \left( ( u^n_{i-1})^2 - ( u^n_{i})^2 \right). \]
+								We implement the numerical scheme in python with a random initial datum:
+								<div class="code-block">
+	                  <pre><code>
+import random as alea
+
+NUM_POINTS = 50
+liste_values =  [0 for _ in range(NUM_POINTS)]
+in_value = 0.5
+counter = 0
+
+#Function corresponding to the numerical scheme with a boundary value
+def propagate():
+    for i in range(len(liste_values)-1):
+        liste_values[-i-1] += 0.5*((liste_values[-i-2])**2 - (liste_values[-i-1])**2)
+    liste_values[0] += 0.5*((in_value)**2 - (liste_values[-i-1])**2)
+
+#Main loop that computes 100 iterations of the scheme
+while counter <= 100:
+		if counter % 10 == 0:
+				counter = alea.random()
+		propagate()
+		counter += 1
+</code></pre>
+	              </div>
+
+						If we use matplotlib to plot the values using the 'hot' colormap, we get:
+						<div class="center">
+							<video controls style="max-height:30em;">
+								<source src="lava_flows/FVS_lava_cropped.mp4" type="video/mp4" />
+								<p>
+									If you can't see the video, you can download it
+									<a href="lava_flows/FVS_lava_cropped.mp4">here</a>.
+								</p>
+							</video>
+						</div>
+
+						The complete code to generate a similar video can be found <a href="https://github.com/TheoRGirard/lava_flows_project">here</a>.</p>
+						<br/>
+
+						<h3>Numerical experiment with the colormaps</h3>
+
+						<p>We want to implement the whole model on an arduino board using C language. This poses an issue as the matplotlib library only exist in Python.
+						Therefore, we reproduce the behaviour of the colormaps in matplotlib in order to port the code in C in a second time.
+						It is interesting to note that the cm (colormap) module of matplotlib in multiple different ways.
+						The "perceptually uniform sequential" colormaps are colormaps design for giving the most accurate reading by the human perception also taking into account color-blind perception.
+						For this kind of colormaps, the implementation of matplotlib simply give a fixed list of 256 colors as RGB values. The colormap object then select the color corresponding to a value between \( [0,1] \).
+						Here is a visualization of the inferno colormap in the RGB cube.
+						<div class="center">
+							<img src="lava_flows/inferno_plot.png" alt="A plot of the inferno colorscale." style="max-width:80%;" />
+						</div>
+						For more information about scientific colour maps see <a href="https://www.fabiocrameri.ch/colourmaps/">the website of F. Crameri</a>.</p>
+
+						<p>
+						On the contrary, most of the colormaps of matplotlib (including 'hot') are defined using a linear interpolation.
+						The principle is simple, matplotlib defines a small number of control points in the color space and a function to interpolate between the control points.
+						Below we reproduce the code corresponding to the 'hot' colormap.
+						<div class="code-block">
+								<pre><code>
+_hot_data = {'red':   ((0., 0.0416, 0.0416),
+                       (0.365079, 1.000000, 1.000000),
+                       (1.0, 1.0, 1.0)),
+             'green': ((0., 0., 0.),
+                       (0.365079, 0.000000, 0.000000),
+                       (0.746032, 1.000000, 1.000000),
+                       (1.0, 1.0, 1.0)),
+             'blue':  ((0., 0., 0.),
+                       (0.746032, 0.000000, 0.000000),
+                       (1.0, 1.0, 1.0))}
+
+#A simple implementation of a linear interpolation
+def mapp(a,x1,x2,y1,y2):
+    return y1 + (y2-y1)*(a-x1)/(x2-x1)
+
+#A function mapping a number between 0 and 1 to a RGB 8-bit triplet
+def generate_hot_map(a):
+    value = [0,0,0]
+    for color, key in enumerate(['red','green','blue']):
+        i = 1
+        while not (a <= _hot_data[key][i][0] and a >= _hot_data[key][i-1][0]):
+            i +=1
+        value[color] = int(255.0*mapp(a,
+                                   _hot_data[key][i-1][0],
+                                   _hot_data[key][i][0],
+                                   _hot_data[key][i-1][1],
+                                   _hot_data[key][i][1]))
+    return value
+</code></pre>
+						</div>
+						<p>Here is a visualization of the hot colormap in the RGB cube.</p>
+						<div class="center">
+							<img src="lava_flows/hot_plot.png" alt="A plot of the hot colorscale." style="max-width:80%;" />
+						</div>
+
+						<p>Eventually, we give the following implementation in C.</p>
+						<div class="code-block">
+								<pre><code>
+//Slightly modified colorscale data in order to fit the LED behavior.
+float hot_data[3][4][2] = {{{0.0, 0.0},
+                           {0.365079, 1.000000},
+                           {1.0, 1.0}},
+                          {{0.0, 0.0},
+                           {0.365079, 0.000000},
+                           {0.746032, 0.85},
+                           {1.0, 0.95}},
+                          {{0., 0.},
+                           {0.746032, 0.000000},
+                           {1.0, 0.95}}};
+
+float mapp(float a,float x1,float x2,float y1,float y2){
+    return y1 + (y2-y1)*(a-x1)/(x2-x1);
+}
+
+int hot_map_value(float a, int key){
+    int i = 1;
+    while(a > hot_data[key][i][0] || a < hot_data[key][i-1][0]){
+        i +=1;
+    }
+    return (int)(255.0*mapp(a,
+                               hot_data[key][i-1][0],
+                               hot_data[key][i][0],
+                               hot_data[key][i-1][1],
+                               hot_data[key][i][1]));
+}
+</code></pre>
+						</div>
+						<p>All the codes concerning the colormap tests are also available <a href="https://github.com/TheoRGirard/lava_flows_project">here</a>.</p>
+						</div>
+					</section>
+
+					<section id="chap3" class="three">
+						<div class="container course">
+							<header>
+                <h2>Code for the arduino</h2>
+              </header>
+
+							<p>Eventually, we combine all the ingredients above with the arduino library <a href="https://github.com/FastLED/FastLED">FastLED</a> for arduino.
+								In the script I wrote (available <a href="https://github.com/TheoRGirard/lava_flows_project">here</a>), we use the data pin D9 or the arduino as the data pin to connect to the LED strip.</p>
+							<p>We obtain this kind of result with a 144 LED strip.</p>
+							<div class="row">
+								<div class="col-6 col-12-mobile">
+									<video controls style="max-width:90%;">
+										<source src="lava_flows/videoLED2.mp4" type="video/mp4" />
+										<p>
+											If you can't see the video, you can download it
+											<a href="lava_flows/videoLED2.mp4">here</a>.
+										</p>
+									</video>
+								</div>
+								<div class="col-6 col-12-mobile">
+									<video controls style="max-width:90%;">
+										<source src="lava_flows/videoLED1.mp4" type="video/mp4" />
+										<p>
+											If you can't see the video, you can download it
+											<a href="lava_flows/videoLED1.mp4">here</a>.
+										</p>
+									</video>
+								</div>
+							</div>
+
+						</div>
+					</section>
+
+					<section id="chap4" class="four">
+						<div class="container course">
+              <header>
+                <h2>References</h2>
+              </header>
+							We list here a few ressources:
+							<div class="list-container">
+							  <ul>
+									<li>
+										<a href="https://math.univ-cotedazur.fr/~nkonga/Cours/FDFV/poly_jaca_droniou.cr.pdf"><strong>A finite volume scheme course</strong>,
+											well-written, precise and progressive.</a>
+									</li>
+									<li>
+										<a href="https://matplotlib.org/stable/users/explain/colors/colormaps.html"><strong>Matplotlib documentation on colour scales</strong>.
+										</a>
+									</li>
+									<li>
+										<a href="https://github.com/FastLED/FastLED"><strong>The FastLED repository</strong>, with huge documentation, truly versatile.
+										</a>
+									</li>
+									<li>
+										<a href="https://www.fabiocrameri.ch/colourmaps/"><strong>The website of F. Crameri</strong> about scientific colour scales.
+										</a>
+									</li>
+									<li>
+										<a href="https://www.siam.org/media/21wdmeyj/gsmmc2025_lavaflow.pdf"><strong>True model for lava flows</strong>.
+										</a>
+									</li>
+								</ul>
+							</div>
+
+
+
+							<h3 id="citations">Citations</h3>
+							<div class="list-container">
+							  <ul>
+									<li class="paper">
+										<strong>[BMDP23] </strong><a href="https://doi.org/10.1016/j.jvolgeores.2023.107935">Elisa Biagioli, Mattia de' Michieli Vitturi, Fabio Di Benedetto, Margherita Polacci,
+										<span class="article-title"> Benchmarking a new 2.5D shallow water model for lava flows</span>, Journal of Volcanology and Geothermal Research, 2023.</a>
+									</li>
+									<li class="paper">
+										<strong>[WD90] </strong><a href="">Webb S. L. and Dingwell D. B.,
+										<span class="article-title"></span>, JGR, 1990.</a>
+									</li>
+									<li class="paper">
+										<strong>[GD03] </strong><a href="">Giordano D. and Dingwell D.,
+										<span class="article-title"></span>, Bull. Volcanol, 2003.</a>
+									</li>
+									<li class="paper">
+										<strong>[V08] </strong><a href="">Vetere F. et al.,
+										<span class="article-title"></span>, JVGR, 2008.</a>
+									</li>
+									<li class="paper">
+										<strong>[JWL19] </strong><a href="https://www.researchgate.net/publication/374422452_Modeling_of_steep-sided_dome_formation_on_Venus">Fang, Jiaqi & Tian, Wei & Wang, Lei & Fa, Wenzhe & Liu, Xi.,
+										<span class="article-title">Modeling of steep-sided dome formation on Venus</span>, Conference: Lunar and Planetary Science Conference, 2019.</a>
+									</li>
+
+							  </ul>
+							</div>
+
+,
+
+
+						</div>
+					</section>
+
+
+			</div>
+
+		<!-- Footer -->
+			<div id="footer">
+
+				<!-- Copyright -->
+					<ul class="copyright">
+						<li>&copy; Theo Girard. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+
+			</div>
+
+		<!-- Scripts -->
+			<script src="../assets/js/custom.js"></script>
+			<script src="../assets/js/jquery.min.js"></script>
+			<script src="../assets/js/jquery.scrolly.min.js"></script>
+			<script src="../assets/js/jquery.scrollex.min.js"></script>
+			<script src="../assets/js/browser.min.js"></script>
+			<script src="../assets/js/breakpoints.min.js"></script>
+			<script src="../assets/js/util.js"></script>
+			<script src="../assets/js/main.js"></script>
+
+      <!-- Gestion des boites de code -->
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/atom-one-dark.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/python.min.js"></script>
+      <script>hljs.highlightAll();</script>
+
+			<script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  			</script>
+
+	</body>
+</html>

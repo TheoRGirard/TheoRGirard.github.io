@@ -33,7 +33,7 @@
 								<li><a href="#top" id="about-link"><span class="icon solid fa-user">About me</span></a></li>
 								<li><a href="#research" id="research-link"><span class="icon solid fa-flask">Research</span></a></li>
 								<li><a href="#teachings" id="teaching-link"><span class="icon solid fa-graduation-cap">Teachings</span></a></li>
-								<li><a href="#simulations" id="simulations-link"><span class="icon solid fa-cubes">Simulations</span></a></li>
+								<li><a href="#simulations" id="simulations-link"><span class="icon solid fa-cubes">Projects/ressources</span></a></li>
 								<li><a href="#music" id="music-link"><span class="icon solid fa-music">Musical instruments</span></a></li>
 								<li><a href="#scenography" id="scenography-link"><span class="icon solid fa-rocket">Scenography</span></a></li>
 								<li><a href="#contact" id="contact-link"><span class="icon solid fa-envelope">Contact</span></a></li>
@@ -154,6 +154,15 @@
 										</header>
 									</article>
 								</div>
+								<div class="col-3 col-12-mobile">
+									<article class="item">
+										<a href="assets/pdf/BeamerMontpellier2026.pdf" class="image fit"><img src="assets/images/Hughes2d_demo.png" alt="" /></a>
+										<header>
+											<h3>Macroscopic pedestrian flows: from Hughes’ model to mean field games.</h3>
+											<p class="complement">Presented in Montpellier </p>
+										</header>
+									</article>
+								</div>
 							</div>
 
 						</br>
@@ -229,84 +238,40 @@
 						<div class="container">
 
 							<header>
-								<h2>Simulations</h2>
+								<h2>Projects and ressources</h2>
 							</header>
 
-							<h3>One-dimensional Hughes model</h3>
-
-							<p style="text-align:left;">In the one-dimensional setting, the Hughes' model simulate the evacuation of a corridor ( here we choose the corridor to be the domain \( [-1,1] \) ) with exits on the right and the left. It can be rewritten as:
-								\[\left\{ \begin{matrix} \partial_t \rho(t,x) + \partial_x \left[ \textrm{sign} (x - \xi(t)) f(\rho(t,x)) \right] = 0 \\
-								\int_{-1}^{\xi(t)} c(\rho(t,x)) \textrm{d} x = \int_{\xi(t)}^1 c(\rho(t,x)) \textrm{d} x. \end{matrix} \right.\]
-								Here \( f(\rho) = \rho v(\rho) \) is the flux function corresponding to Lighthill-Whitham-Richards (LWR) model and \(v\) corresponds to the speed of pedestrians.
-								Also, \( c(\rho) \) is the running cost paid by agents to travel in a location with density \( \rho \).
-								The unknown \( \xi \) named the "turning curve" corresponds to the point in space where pedestrian pay the same total cost to leave the corridor through the left or the right exit.
-
-								</br>
-								Below, two simulations of this model using a finite volume scheme. The turning curve \(\xi\) is in red and the density is plotted on \([-1.5,1.5]\) even if the dynamics of the turning curve only depends on what's inside \([-1,1]\).
-							</p>
-
-
 							<div class="row">
-								<div class="col">
-									<article class="item">
-										<video controls>
-										  <source src="assets/videos/Hughes1DSC1.mp4" type="video/mp4" />
-										  <p>
-										    If you can't see the video, you can download it
-										    <a href="assets/videos/Hughes1DSC1.mp4">here</a>.
-										  </p>
-										</video>
+								<div class="col-6 col-12-mobile">
+									<article class="item project">
 										<header>
-											<h3>With a cost function \(c(\rho) = 1 + 2\rho\).</h3>
+											<h3>Hughes2d software</h3>
 										</header>
+										<a href="simulations.html" class="image fit"><img src="assets/images/Hughes2d_demo.png" alt="" /></a>
+										<p>Résumé...
+										</p>
+										<footer>
+											<div class="center"><a href="https://github.com/TheoRGirard/hughes2d" class="button scrolly" style="font-size: 1.5rem;padding-top: 0.3em;margin-bottom: 0.5em;color: #666 !important;">Hughes2d repository</a></div>
+											<div class="center"><a href="https://hughes2d.readthedocs.io/en/latest/index.html" class="button scrolly" style="font-size: 1.5rem;padding-top: 0.3em;margin-bottom: 0.5em;color: #666 !important;">Hughes2d documentation</a></div>
+											<div class="center"><a href="simulations.html" class="button scrolly" style="font-size: 1.5rem;padding-top: 0.3em;margin-bottom: 0.5em;color: #666 !important;">More simulations of 2D Hughes' model...</a></div>
+										</footer>
 									</article>
 								</div>
-								<div class="col">
-									<article class="item">
-										<video controls>
-										  <source src="assets/videos/Hughes1DCout2_1.mp4" type="video/mp4" />
-										  <p>
-										    If you can't see the video, you can download it
-										    <a href="assets/videos/Hughes1DCout2_1.mp4">here</a>.
-										  </p>
-										</video>
+					
+								<div class="col-6 col-12-mobile">
+									<article class="item project">
 										<header>
-											<h3>With constrained evacuation at the exit \(x=1\) </br>
-												and a cost function \(c(\rho) = 1 +4\rho^2\).</h3>
+											<h3>Lava flow on LED strip</h3>
 										</header>
+										<a href="simulations.html" class="image fit"><img src="projects/lava_flows/Miniature.png" alt="" /></a>
+										<p>Résumé...
+										</p>
+										<footer>
+											<div class="center"><a href="projects/lava_flows.html" class="button scrolly" style="font-size: 1.5rem;padding-top: 0.3em;margin-bottom: 0.5em;color: #666 !important;">More about lava flows</a></div>
+										</footer>
 									</article>
 								</div>
 							</div>
-							</br>
-
-							<h3>2D Hughes' model</h3>
-
-							<p style="text-align:left;">In the two-dimensional setting, the Hughes' model takes the following form:
-								\[\left\{ \begin{matrix} \partial_t \rho(t,x) + \textrm{div} \left( \vec{V}(x) f(\rho(t,x)) \right) = 0 \\
-								\left|\nabla u(x) \right| = c(\rho(t,x)) \\
-								\vec{V}(x) = - \frac{\nabla u(x)}{|\nabla u (x)|}. \end{matrix}\right.\]
-								Here \( u \) is a solution of the Eikonal equation with a Dirichlet condition \(u=0\) at the exits.
-							</br>
-							Below is a simulation of the 2D Hughes model where the exits are represented in green and the density is represented by a gradient from red (high dentity) to black (low density).
-							</p>
-
-							<video controls style="max-width: 100%;">
-								<source src="assets/videos/Hughes2D1.mp4" type="video/mp4" />
-								<p>
-									If you can't see the video, you can download it
-									<a href="assets/videos/Hughes2D1.mp4">here</a>.
-								</p>
-							</video>
-							<p> </p>
-							<br/>
-
-							<p>
-							These simulations were computed with the <a href="https://github.com/TheoRGirard/hughes2d">Hughes2d</a> open source software.
-							</p>
-
-							<div class="center"><a href="https://github.com/TheoRGirard/hughes2d" class="button scrolly" style="font-size: 1.5rem;padding-top: 0.3em;margin-bottom: 0.5em;color: #666 !important;">Hughes2d repository</a></div>
-							<div class="center"><a href="https://hughes2d.readthedocs.io/en/latest/index.html" class="button scrolly" style="font-size: 1.5rem;padding-top: 0.3em;margin-bottom: 0.5em;color: #666 !important;">Hughes2d documentation</a></div>
-							<div class="center"><a href="simulations.html" class="button scrolly" style="font-size: 1.5rem;padding-top: 0.3em;margin-bottom: 0.5em;color: #666 !important;">More simulations of 2D Hughes' model...</a></div>
 
 						</div>
 					</section>
